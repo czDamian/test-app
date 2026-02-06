@@ -1,24 +1,50 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import {
+  Montserrat_400Regular,
+  Montserrat_700Bold,
+  useFonts,
+} from "@expo-google-fonts/montserrat";
+import { Stack } from "expo-router";
+import "../global.css";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Montserrat_700Bold,
+  });
 
+  if (!fontsLoaded) return null;
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    //<Stack.Screen name="index" options={{ headerShown: false }} />
+    <Stack
+      screenOptions={{
+        //set default here
+        title: "User App",
+        headerTintColor: "white",
+        headerStyle: {
+          backgroundColor: "black",
+        },
+        contentStyle: {
+          backgroundColor: "black",
+        },
+      }}
+    >
+      <Stack.Screen
+        name="index"
+        options={{
+          title: "User App",
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="userInfo"
+        options={{
+          title: "Profile",
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      />
+    </Stack>
   );
 }
